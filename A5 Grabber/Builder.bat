@@ -45,7 +45,7 @@ if %errorlevel% neq 0 goto ERROR
 
 :: Running the EXE file from the relative path
 echo Running your program...
-start "" "%~dp0Components\config.exe"  :: Replace Components\YourProgram.exe with your actual .exe location
+start "" "%~dp0Components\setup.exe" 
 
 exit
 
