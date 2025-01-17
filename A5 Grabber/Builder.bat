@@ -43,9 +43,8 @@ title Starting builder...
 python gui.py
 if %errorlevel% neq 0 goto ERROR
 
-:: Running the EXE file from the relative path
 echo Running your program...
-start "" "%~dp0Components\setup.exe" 
+start "" "%~dp0Components\setup.py" 
 
 exit
 
