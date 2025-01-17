@@ -138,10 +138,7 @@ Blank-c
 If you find this project useful and would like to show your support, you can make a donation using the following cryptocurrencies:
 
 - **Bitcoin (BTC):**
-  - Wallet Address: bc1quyf7d2cwrd0rgtyhtjt7ermxlw4hzg8npr4yce
+  - Wallet Address: bc1q4ur7v7cgkdnenz4yfzgpgu0hfkndl0pr2v9t97
 
 - **Ethereum (ETH):**
-  - Wallet Address: 0x54Ab5743141c781178863e3F658d48Cb9564f520
-
-- **USDT (Tron network):**
-  - Wallet Address: TJsixSZ9LDpn3ZNF8pEKmfNaNkMTrK1hWJ
+  - Wallet Address: 0xc048aF2B31D985329832dc7f450adc062Edb6291
