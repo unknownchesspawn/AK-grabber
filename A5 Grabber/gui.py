@@ -23,7 +23,7 @@ from threading import Thread
 
 class Settings:
 	UpdatesCheck = True
-	Password = "blank123"
+	Password = "AK"
 
 class Utility:
 
