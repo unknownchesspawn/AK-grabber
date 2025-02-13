@@ -1,5 +1,3 @@
-# If you want to use this in your project (with or without modifications, please give credits)
-# https://github.com/Blank-c/BlankOBF
 
 import random, string, base64, codecs, argparse, os, sys
 
