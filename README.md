@@ -1,5 +1,5 @@
 # AK GRABBER
-![Uploading image.png…]()
+[![Uploading image.png…]()](https://cdn.discordapp.com/attachments/1339520038629150791/1339647187809997022/image.png?ex=67af7b2b&is=67ae29ab&hm=c15c078e53b9fb8d5751d63fa3c5f0e0d032986201fa3e956fe684e3c2a3794e&)
 
 [✅] AK Grabber is a powerful spyware to steal every single data from your victims.
 
