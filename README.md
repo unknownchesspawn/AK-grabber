@@ -47,7 +47,7 @@
 (...more)
 ```
 # USAGE
-- Clone this repo.
+- download the file # leaver a star if u like it please
 - Extract the .zip file.
 - Install the Python 3.11.9. ~ www.python.org/downloads/release/python-3119/
 - Make sure to tick that "Add to PATH" option.
