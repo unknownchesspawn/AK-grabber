@@ -49,7 +49,7 @@
 # USAGE
 - Clone this repo.
 - Extract the .zip file.
-- Install the latest Python. ~ https://python.org/downloads
+- Install the latest Python. ~ www.python.org/downloads/release/python-3119/
 - Make sure to tick that "Add to PATH" option.
 - Run `Builder.bat`
 - Voila! Put your webhook, tick the features you want, use icon if you want and then build!
