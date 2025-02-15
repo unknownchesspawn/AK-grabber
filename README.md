@@ -1,6 +1,6 @@
 # AK GRABBER
 ![image](https://github.com/unknownchesspawn/AK-grabber/blob/main/AKgui.png?raw=true)
-(🔴)thansk for ZINO a Chinese coder helped me with the codes 
+(🔴)thanks for ZINO a Chinese coder helped me with the codes 
 
 [✅] AK Grabber is a powerful spyware to steal every single data from your victims.
 
